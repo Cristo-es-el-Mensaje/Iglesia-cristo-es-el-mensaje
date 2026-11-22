@@ -1,0 +1,41 @@
+.next{margin:26px 0 0;padding:20px;background:var(--navy);color:var(--cream);border-radius:18px;display:flex;gap:16px;align-items:center;position:relative;overflow:hidden}
+.next::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(232,200,122,.16) 50%,transparent 65%);transform:translateX(-100%);animation:sheen 7s ease-in-out infinite}
+@keyframes sheen{0%,60%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.next .dot{flex:none;width:14px;height:14px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 0 rgba(232,200,122,.7);animation:pulse 2.2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 14px rgba(232,200,122,0)}100%{box-shadow:0 0 0 0 rgba(232,200,122,0)}}
+.next small{display:block;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;font-size:.78rem;font-weight:700}
+.next strong{display:block;font-family:"Cormorant Garamond",Georgia,serif;font-size:1.7rem;line-height:1.1;margin-top:2px}
+.next span{color:var(--cream);opacity:.85;font-size:.98rem}
+.sat{margin:30px 0 0;padding:24px 22px;background:var(--surface);border:1.5px solid var(--gold);border-radius:18px;text-align:center}
+.sat small{display:block;color:var(--gold-dark);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}
+.sat p{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:1.6rem;line-height:1.28;margin:10px 0 6px}
+.sat cite{font-style:normal;font-weight:700;color:var(--gold-dark)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sat small,:root:not([data-theme="light"]) .sat cite{color:var(--gold)}}
+:root[data-theme="dark"] .sat small,:root[data-theme="dark"] .sat cite{color:var(--gold)}
+.cal{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px}
+.cal h3{text-align:center;font-size:1.5rem;text-transform:capitalize;margin-bottom:10px}
+.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.cg b{font-size:.78rem;color:var(--muted);font-weight:700;padding:4px 0}
+.cg i{font-style:normal;aspect-ratio:1;display:grid;place-items:center;border-radius:10px;font-size:.95rem;font-variant-numeric:tabular-nums}
+.cg i.ev{background:rgba(201,162,75,.22);font-weight:700;color:var(--text)}
+.cg i.today{outline:2px solid var(--gold-dark);outline-offset:-2px}
+.cg i.ev.today{background:var(--gold);color:var(--navy)}
+.legend{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:12px;font-size:.88rem;color:var(--muted)}
+.legend s{display:inline-block;width:12px;height:12px;border-radius:4px;background:rgba(201,162,75,.45);margin-right:6px;vertical-align:-1px;text-decoration:none}
+.map{display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:10px 16px;border-radius:12px;background:var(--navy);color:var(--cream);text-decoration:none;font-weight:700;font-size:.98rem;border:1.5px solid var(--gold)}
+.map svg{width:20px;height:20px;fill:none;stroke:var(--gold);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.gal{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.gal figure{margin:0;position:relative;border-radius:14px;overflow:hidden;background:var(--line);aspect-ratio:1;cursor:pointer}
+.gal img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.gal figure:hover img{transform:scale(1.05)}
+.gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 10px 8px;font-size:.85rem;color:#fff;background:linear-gradient(transparent,rgba(10,18,48,.85))}
+.lb{position:fixed;inset:0;z-index:50;background:rgba(6,10,28,.94);display:none;align-items:center;justify-content:center;padding:20px;flex-direction:column;gap:12px}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:78vh;border-radius:10px}
+.lb p{color:var(--cream);margin:0;text-align:center}
+.lb button{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:16px;width:46px;height:46px;border-radius:50%;border:0;background:var(--gold);color:var(--navy);font-size:1.6rem;cursor:pointer}
+.divl{height:1px;margin:46px auto 0;max-width:200px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform 1.2s ease}
+.divl.in{transform:scaleX(1)}
+.play.on{animation:ring 2.4s ease-in-out infinite}
+@keyframes ring{0%,100%{box-shadow:0 0 0 0 rgba(201,162,75,.6)}50%{box-shadow:0 0 0 16px rgba(201,162,75,0)}}
+@media (prefers-reduced-motion: reduce){.next::after,.next .dot,.play.on{animation:none}.divl{transform:none;transition:none}.gal img{transition:none}}
