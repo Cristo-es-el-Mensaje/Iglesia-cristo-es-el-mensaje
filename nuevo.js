@@ -38,6 +38,8 @@ function cal(){
  for(var d=1;d<=days;d++){var w=(first+d-1)%7,c="";if(w===6||w===2)c+="ev ";if(d===today)c+="today";h+='<i class="'+c+'">'+d+"</i>"}
  $("calg").innerHTML=h;
 }
+function gcd(a,b){return b?gcd(b,a%b):a}
+function rot(){get("verses?select=ref,body&order=id").then(function(v){if(!v.length)return;var n=v.length,slot=Math.floor((Date.now()-3*3600*1000)/(12*3600*1000)),P=211;while(gcd(P,n)!==1)P+=2;var x=v[(slot*P)%n];$("vtxt").textContent="“"+x.body+"”";$("vref").textContent=x.ref}).catch(function(){})}
 function txt(id,v){var e=$(id);if(e&&v)e.textContent=v}
 function load(){
  get("settings?select=key,value").then(function(rows){
