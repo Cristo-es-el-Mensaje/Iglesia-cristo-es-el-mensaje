@@ -45,7 +45,7 @@ function load(){
  get("settings?select=key,value").then(function(rows){
   var s={};rows.forEach(function(r){s[r.key]=r.value});
   if(s.verse_text)$("vtxt").textContent="“"+s.verse_text.replace(/^[“"]|[”"]$/g,"")+"”";
-  txt("vref",s.verse_ref);
+  txt("vref",s.verse_ref);if(!s.verse_text)rot();
   txt("sattitle",s.sat_title);
   if(s.sat_text){$("sattext").textContent="“"+s.sat_text+"”";txt("satref",s.sat_ref)}else{$("sat").hidden=true}
   if(s.audio_path){var a=$("aud");a.src=SB+"/storage/v1/object/public/media/"+s.audio_path;a.load()}
