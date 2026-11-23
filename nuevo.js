@@ -55,14 +55,16 @@ function load(){
   $("galsec").hidden=false;
   var g=$("gal");
   rows.forEach(function(r){
-   var f=document.createElement("figure"),im=document.createElement("img"),u=SB+"/storage/v1/object/public/media/"+r.path;
-   im.src=u;im.loading="lazy";im.alt=r.caption||"Foto de la comunidad";f.appendChild(im);
+   var f=document.createElement("figure"),u=SB+"/storage/v1/object/public/media/"+r.path,vid=/\.(mp4|webm|mov)$/i.test(r.path),im;
+   if(vid){im=document.createElement("video");im.src=u;im.controls=true;im.playsInline=true;im.preload="metadata";im.style.width="100%";im.style.borderRadius="12px";im.style.background="#000"}else{im=document.createElement("img");im.src=u;im.loading="lazy";im.alt=r.caption||"Foto de la comunidad"}
+   f.appendChild(im);
    if(r.caption){var c=document.createElement("figcaption");c.textContent=r.caption;f.appendChild(c)}
-   f.addEventListener("click",function(){$("lbi").src=u;$("lbc").textContent=r.caption||"";$("lb").classList.add("on")});
+   if(!vid)f.addEventListener("click",function(){$("lbi").src=u;$("lbc").textContent=r.caption||"";$("lb").classList.add("on")});
    g.appendChild(f);
   });
  }).catch(function(){});
 }
+(function(){var b=document.createElement("a"),t="¡Hola! Te invito a la iglesia Cristo es el Mensaje en Mallín Ahogado 🙏 Mirá nuestra página: "+location.href.split("#")[0];b.href="https://wa.me/?text="+encodeURIComponent(t);b.target="_blank";b.rel="noopener";b.textContent="💬 Invitar por WhatsApp";b.setAttribute("style","position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:50;background:#25D366;color:#fff;font:700 15px system-ui,sans-serif;padding:12px 16px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.3)");document.body.appendChild(b)})();
 $("lbx").addEventListener("click",function(){$("lb").classList.remove("on")});
 $("lb").addEventListener("click",function(e){if(e.target.id==="lb")$("lb").classList.remove("on")});
 var a=$("aud"),p=$("play");a.addEventListener("play",function(){p.classList.add("on")});a.addEventListener("pause",function(){p.classList.remove("on")});
