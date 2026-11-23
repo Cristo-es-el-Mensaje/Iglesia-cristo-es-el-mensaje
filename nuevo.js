@@ -79,5 +79,5 @@ $("lbx").addEventListener("click",function(){$("lb").classList.remove("on")});
 $("lb").addEventListener("click",function(e){if(e.target.id==="lb")$("lb").classList.remove("on")});
 var a=$("aud"),p=$("play");a.addEventListener("play",function(){p.classList.add("on")});a.addEventListener("pause",function(){p.classList.remove("on")});
 document.querySelectorAll(".divl,.next,.sat,.cal").forEach(function(el){if("IntersectionObserver" in window){new IntersectionObserver(function(es,o){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");o.unobserve(e.target)}})},{threshold:.15}).observe(el)}else el.classList.add("in")});
-next();ay();cal();load();setInterval(function(){next();ay()},60000);
+(function(){var s=document.createElement("script");s.src="compartir.js";document.body.appendChild(s)})();next();ay();cal();load();setInterval(function(){next();ay()},60000);
 })();
