@@ -18,6 +18,8 @@
 .cg b{font-size:.78rem;color:var(--muted);font-weight:700;padding:4px 0}
 .cg i{font-style:normal;aspect-ratio:1;display:grid;place-items:center;border-radius:10px;font-size:.95rem;font-variant-numeric:tabular-nums}
 .cg i.ev{background:rgba(201,162,75,.22);font-weight:700;color:var(--text)}
+.cg i.fast{background:rgba(120,160,220,.3);font-weight:700;color:var(--text);box-shadow:inset 0 0 0 2px rgba(120,160,220,.75)}
+.legend s.fs{background:rgba(120,160,220,.6)}
 .cg i.today{outline:2px solid var(--gold-dark);outline-offset:-2px}
 .cg i.ev.today{background:var(--gold);color:var(--navy)}
 .legend{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:12px;font-size:.88rem;color:var(--muted)}
