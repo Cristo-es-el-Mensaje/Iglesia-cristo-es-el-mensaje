@@ -78,9 +78,9 @@ audio{width:100%;margin-top:10px}
     <div class="msg" id="m3"></div>
   </section>
   <section class="card">
-    <h2>Galería de fotos</h2>
+    <h2>Galería de fotos y videos</h2>
     <p class="hint">Elegí una o varias fotos. Se achican solas para que la página cargue rápido.</p>
-    <label for="gf">Fotos</label><input id="gf" type="file" accept="image/*" multiple>
+    <label for="gf">Fotos o videos (video: máximo 25 MB)</label><input id="gf" type="file" accept="image/*,video/*" multiple>
     <label for="gc">Descripción corta (opcional)</label><input id="gc" type="text" placeholder="Ej.: Merienda del sábado">
     <button id="sg" type="button">Subir fotos</button>
     <div class="msg" id="m4"></div>
@@ -129,8 +129,8 @@ function gal(){
  api("/rest/v1/gallery?select=id,path,caption&order=created_at.desc").then(function(rows){
   var g=$("gl");g.innerHTML="";
   rows.forEach(function(r){
-   var f=document.createElement("figure"),i=document.createElement("img"),s=document.createElement("span"),b=document.createElement("button");
-   i.src=SB+"/storage/v1/object/public/media/"+r.path;i.alt="";s.textContent=r.caption||"";b.textContent="Borrar";b.type="button";
+   var f=document.createElement("figure"),i=document.createElement(/\.(mp4|webm|mov)$/i.test(r.path)?"video":"img"),s=document.createElement("span"),b=document.createElement("button");
+   i.src=SB+"/storage/v1/object/public/media/"+r.path;i.alt="";if(i.tagName==="VIDEO"){i.controls=true;i.preload="metadata";i.style.width="100%"}s.textContent=r.caption||"";b.textContent="Borrar";b.type="button";
    b.addEventListener("click",function(){
     if(b.dataset.s!=="1"){b.dataset.s="1";b.textContent="¿Seguro? Tocá otra vez";return}
     b.disabled=true;
@@ -174,8 +174,9 @@ $("sg").addEventListener("click",function(){
  (function next(i){
   if(i>=fs.length){say("m4","Listo: "+n+" foto"+(n===1?"":"s")+" subida"+(n===1?"":"s")+".",true);$("gf").value="";$("gc").value="";$("sg").disabled=false;gal();return}
   say("m4","Subiendo foto "+(i+1)+" de "+fs.length+"…");
-  var p="gallery/"+rid()+".jpg";
-  shrink(fs[i]).then(function(b){return upload(p,b,"image/jpeg")})
+  var isv=/^video\//.test(fs[i].type)||/\.(mp4|mov|webm)$/i.test(fs[i].name),p="gallery/"+rid()+(isv?"."+((fs[i].name.split(".").pop()||"mp4").toLowerCase().replace(/[^a-z0-9]/g,"")||"mp4"):".jpg");
+  if(isv&&fs[i].size>25*1024*1024){say("m4","Un video pesa más de 25 MB; se salteó.",false);next(i+1);return}
+  (isv?upload(p,fs[i],fs[i].type||"video/mp4"):shrink(fs[i]).then(function(b){return upload(p,b,"image/jpeg")}))
   .then(function(){return api("/rest/v1/gallery",{method:"POST",headers:{"Content-Type":"application/json",Prefer:"return=minimal"},body:JSON.stringify({path:p,caption:cap})})})
   .then(function(){n++}).catch(function(){}).then(function(){next(i+1)});
  })(0);
