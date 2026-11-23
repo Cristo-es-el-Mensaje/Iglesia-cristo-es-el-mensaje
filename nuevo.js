@@ -28,6 +28,16 @@ function next(){
   ss.textContent=days>1?("Faltan "+days+" días. "+e.s):e.s;
  }
 }
+function ay(){
+ var n=ar(),y=n.getUTCFullYear(),m=n.getUTCMonth(),d=n.getUTCDate(),fd=m===0?2:1;
+ var M=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+ if(d>fd){m++;if(m>11){m=0;y++}fd=m===0?2:1}
+ var days=Math.round((Date.UTC(y,m,fd)-Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),d))/864e5);
+ var el=$("ayu");
+ if(!el){var nx=$("next");if(!nx)return;el=document.createElement("div");el.id="ayu";el.setAttribute("style","margin-top:12px;padding:12px 16px;border-radius:14px;text-align:center;background:rgba(120,160,220,.18);border:1px solid rgba(120,160,220,.5);font-size:.95rem");nx.parentNode.insertBefore(el,nx.nextSibling)}
+ el.textContent=days===0?"🙏 Hoy es el ayuno grupal de la iglesia":"🙏 Próximo ayuno grupal: "+fd+" de "+M[m]+(days===1?" (mañana)":" (faltan "+days+" días)");
+ var lg=document.querySelector(".legend");if(lg&&!$("lgf")){var sp=document.createElement("span");sp.id="lgf";sp.innerHTML="<s class='fs'></s>Ayuno grupal";lg.insertBefore(sp,lg.children[1]||null)}
+}
 function cal(){
  var n=ar(),y=n.getUTCFullYear(),m=n.getUTCMonth(),today=n.getUTCDate();
  var M=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
@@ -35,7 +45,7 @@ function cal(){
  var first=new Date(Date.UTC(y,m,1)).getUTCDay(),days=new Date(Date.UTC(y,m+1,0)).getUTCDate();
  var h="";["D","L","M","M","J","V","S"].forEach(function(x){h+="<b>"+x+"</b>"});
  for(var i=0;i<first;i++)h+="<i></i>";
- for(var d=1;d<=days;d++){var w=(first+d-1)%7,c="";if(w===6||w===2)c+="ev ";if(d===today)c+="today";h+='<i class="'+c+'">'+d+"</i>"}
+ for(var d=1;d<=days;d++){var w=(first+d-1)%7,c="";if(w===6||w===2)c+="ev ";if(d===(m===0?2:1))c+="fast ";if(d===today)c+="today";h+='<i class="'+c+'">'+d+"</i>"}
  $("calg").innerHTML=h;
 }
 function gcd(a,b){return b?gcd(b,a%b):a}
@@ -69,5 +79,5 @@ $("lbx").addEventListener("click",function(){$("lb").classList.remove("on")});
 $("lb").addEventListener("click",function(e){if(e.target.id==="lb")$("lb").classList.remove("on")});
 var a=$("aud"),p=$("play");a.addEventListener("play",function(){p.classList.add("on")});a.addEventListener("pause",function(){p.classList.remove("on")});
 document.querySelectorAll(".divl,.next,.sat,.cal").forEach(function(el){if("IntersectionObserver" in window){new IntersectionObserver(function(es,o){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");o.unobserve(e.target)}})},{threshold:.15}).observe(el)}else el.classList.add("in")});
-next();cal();load();setInterval(next,60000);
+next();ay();cal();load();setInterval(function(){next();ay()},60000);
 })();
